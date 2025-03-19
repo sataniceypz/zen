@@ -2,8 +2,7 @@ const { command , isPrivate , getBuffer, getJson, isUrl } = require("../lib");
 const fetch = require("node-fetch");
 const { CAPTION } = require("../config");
 const axios = require("axios");
-const X = require("../config");
-
+const yts = require("yt-search");
 
 command(
     {
