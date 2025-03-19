@@ -15,7 +15,6 @@ const config = require("./config");
 const { PluginDB } = require("./lib/database/plugins");
 const Greetings = require("./lib/Greetings");
 const { MakeSession } = require("./lib/session");
-const File = require("./lib/File");
 
 const store = makeInMemoryStore({
   logger: pino().child({ level: "silent", stream: "store" }),
