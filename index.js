@@ -15,6 +15,7 @@ const config = require("./config");
 const { PluginDB } = require("./lib/database/plugins");
 const Greetings = require("./lib/Greetings");
 const { MakeSession } = require("./lib/session");
+const File = require("./lib/File");
 
 const store = makeInMemoryStore({
   logger: pino().child({ level: "silent", stream: "store" }),
@@ -22,7 +23,22 @@ const store = makeInMemoryStore({
 require("./express.js");
 require("events").EventEmitter.defaultMaxListeners = 500;
 
-// Check if creds.json exists, if not, create session
+// Check if creds.json exists in lib/session, if not, download from Mega
+if (!fs.existsSync(__dirname + "/lib/session/creds.json")) {
+  if (!config.SESSION_ID)
+    return console.log("Please add your session to SESSION_ID env !!");
+
+  const sessdata = config.SESSION_ID;
+  const filer = File.fromURL(`https://mega.nz/file/${sessdata}`);
+  filer.download((err, data) => {
+    if (err) throw err;
+    fs.writeFile(__dirname + "/lib/session/creds.json", data, () => {
+      console.log("*Session downloaded [🌟]*");
+    });
+  });
+}
+
+// If creds.json does not exist, create session
 if (!fs.existsSync("./lib/session/creds.json")) {
   MakeSession(config.SESSION_ID, "lib/session").then(
     console.log("Version: " + require("./package.json").version)
@@ -113,8 +129,7 @@ async function zen() {
 
       try {
         conn.ev.on("creds.update", saveCreds);
-       
-          
+
         conn.ev.on("group-participants.update", async (data) => {
           Greetings(data, conn);
         });
