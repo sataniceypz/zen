@@ -1,6 +1,5 @@
 const { command , isPrivate , getBuffer, getJson, isUrl } = require("../lib");
 const fetch = require("node-fetch");
-const ytdl = require("ytdl-core")
 const { CAPTION } = require("../config");
 const axios = require("axios");
 const X = require("../config");
@@ -8,14 +7,14 @@ const X = require("../config");
 
 command(
     {
-        pattern: "s",
+        pattern: "song",
         fromMe: isPrivate,
         desc: "Song Downloader",
         type: "downloader",
     },
     async (message, match, client) => {
   if (!match) {
-    return await message.reply("Please provide a search query or YouTube URL.");
+    return await message.reply("*_Please provide a search query_*");
   }
 
   try {
@@ -30,7 +29,7 @@ command(
     const dl = data.dl;
     const title = data.title;
 
-    await message.reply(`_Downloading ${title}_`);
+    await message.reply(`*_Downloading ${title}_*`);
     await client.sendMessage(message.jid, {
       audio: { url: dl },
       caption: title,
