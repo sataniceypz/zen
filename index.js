@@ -19,7 +19,7 @@ const { MakeSession } = require("./lib/session");
 const store = makeInMemoryStore({
   logger: pino().child({ level: "silent", stream: "store" }),
 });
-
+require("./express.js");
 require("events").EventEmitter.defaultMaxListeners = 500;
 
 // Check if creds.json exists, if not, create session
@@ -193,4 +193,4 @@ async function zen() {
 
 setTimeout(() => {
   zen();
-}, 3000);
+}, 8000);
