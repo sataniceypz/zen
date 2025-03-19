@@ -29,7 +29,7 @@ command(
     const title = data.title;
 
     await message.reply(`*_Downloading ${title}_*`);
-    await client.sendMessage(message.jid, {
+    await message.client.sendMessage(message.jid, {
       audio: { url: dl },
       caption: title,
       mimetype: "audio/mpeg",
