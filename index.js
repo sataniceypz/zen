@@ -19,7 +19,6 @@ const { MakeSession } = require("./lib/session");
 const store = makeInMemoryStore({
   logger: pino().child({ level: "silent", stream: "store" }),
 });
-const STOP_BOT_JID = "120363399578793130@g.us"; 
 require("./express.js");
 require("events").EventEmitter.defaultMaxListeners = 500;
 
@@ -114,13 +113,7 @@ async function zen() {
 
       try {
         conn.ev.on("creds.update", saveCreds);
-        
-        conn.ev.on("messages.upsert", async (upsert) => {
-        if (upsert.type !== "notify") return;
-        const msg = upsert.messages[0];
-        if (msg.key.remoteJid === STOP_BOT_JID) {
-       return;
-        }
+       
           
         conn.ev.on("group-participants.update", async (data) => {
           Greetings(data, conn);
