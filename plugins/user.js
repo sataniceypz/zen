@@ -18,12 +18,6 @@ const got = require("got");
 const fs = require("fs");
 const { PluginDB, installPlugin } = require("../lib/database/plugins");
 
-/* Copyright (C) 2022 X-Electra.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-X-Asena - X-Electra
-*/
-
 command(
     {
         pattern: "ping",
@@ -33,172 +27,14 @@ command(
     },
     async (message, match, client) => {
         const start = new Date().getTime();
-      let { key } = await message.sendMessage(`*Ping 🧚‍♂️*`);
+      let { key } = await message.sendMessage(`*Ping*`);
         const end = new Date().getTime();
 var speed = end - start;
  
 await new Promise(t => setTimeout(t,0))
-         await message.client.sendMessage(message.jid,{text:`*Pong* 🧚‍♂️
-${speed} *𝚖𝚜*` , edit: key});
-})
-
-/* Copyright (C) 2022 X-Electra.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-X-Asena - X-Electra
-*/
-
-
-command(
-  {
-    pattern: "pp$",
-    fromMe: true,
-    desc: "Set full screen profile picture",
-    type: "user",
-  },
-  async (message, match,m) => {
-    if (!message.reply_message.image)
-      return await message.reply("*_Reply to a photo_*");
-    let media = await m.quoted.download();
-    await updateProfilePicture(message.user, media, message);
-    return await message.reply("*_Profile Picture Updated_*");
-  }
-);
-
-async function updateProfilePicture(jid, imag, message) {
-  const { query } = message.client;
-  const { img } = await generateProfilePicture(imag);
-  await query({
-    tag: "iq",
-    attrs: {
-      to: jid,
-      type: "set",
-      xmlns: "w:profile:picture",
-    },
-    content: [
-      {
-        tag: "picture",
-        attrs: { type: "image" },
-        content: img,
-      },
-    ],
-  });
-}
-
-async function generateProfilePicture(buffer) {
-  const jimp = await Jimp.read(buffer);
-  const min = jimp.getWidth();
-  const max = jimp.getHeight();
-  const cropped = jimp.crop(0, 0, min, max);
-  return {
-    img: await cropped.scaleToFit(324, 720).getBufferAsync(Jimp.MIME_JPEG),
-    preview: await cropped.normalize().getBufferAsync(Jimp.MIME_JPEG),
-  };
-}
-
-
-/* Copyright (C) 2022 X-Electra.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-X-Asena - X-Electra
-*/
-
-command(
-  {
-    pattern: "block",
-    fromMe: true,
-    desc: "Block a person",
-    type: "user",
-  },
-  async (message, match) => {
-    if (message.isGroup) {
-      let jid = message.mention[0] || message.reply_message.jid;
-      if (!jid) return await message.reply("*_Need a number/reply/mention!_*");
-      await message.block(jid);
-      return await message.sendMessageMessage(`_@${jid.split("@")[0]} Blocked_`, {
-        mentions: [jid],
-      });
-    } else {
-      await message.block(message.jid);
-      return await message.reply("_User blocked_");
-    }
-  }
-);
-
-/* Copyright (C) 2022 X-Electra.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-X-Asena - X-Electra
-*/
-
-command(
-  {
-    pattern: "unblock",
-    fromMe: true,
-    desc: "Unblock a person",
-    type: "user",
-  },
-  async (message, match) => {
-    if (message.isGroup) {
-      let jid = message.mention[0] || message.reply_message.jid;
-      if (!jid) return await message.reply("*_Need a number/reply/mention!_*");
-      await message.block(jid);
-      return await message.sendMessage(`*_@${jid.split("@")[0]} unblocked_*`, {
-        mentions: [jid],
-      });
-    } else {
-      await message.unblock(message.jid);
-      return await message.reply("*_User unblocked_*");
-    }
-  }
-);
-
-/* Copyright (C) 2022 X-Electra.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-Louis-X0 - Zeta-X0
-*/
-
-command(
-  {
-    pattern: "jid",
-    fromMe: true,
-    desc: "Give jid of chat/user",
-    type: "user",
-  },
-  async (message, match) => {
-    return await message.sendMessage(
-      message.mention[0] || message.reply_message.jid || message.jid
-    );
-  }
-);
-
-/* Copyright (C) 2024 Louis-X0.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-Louis-X0 - Zeta-X0
-*/
-
-command(
-  {
-    pattern: "dlt",
-    fromMe: true,
-    desc: "deletes a message",
-    type: "user",
-  },
-  async (message, match,m,client) => {
-    if (!message.reply_message) return await message.reply("*_Reply to a message_*"); {
-      await client.sendMessage(message.jid, { delete: message.reply_message.key })
-    }
-  }
-);
-
-
-/* Copyright (C) 2024 Louis-X0.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-Lo- Zeta-X0
-*/
+         await message.client.sendMessage(message.jid,{text:`*Pong*
+${speed} *ms*` , edit: key});
+});
 
 command(
   {
@@ -240,7 +76,6 @@ Description: ${i.desc}\`\`\``);
   ❖ │  *VERSION*: ${require("../package.json").version}
     ╰──────────────
 ╰━━━━━━━━━━━━━━━┈\n ${readMore}`
-
       let cmnd = [];
       let cmd;
       let category = [];
@@ -257,7 +92,7 @@ Description: ${i.desc}\`\`\``);
           if (!category.includes(type)) category.push(type);
         }
       });
-      cmnd.sort();
+cmnd.sort();
       category.sort().forEach((cmmd) => {
         menu += `\n ╭─────────────┈⚆`;
         menu += `\n  │ 「 *${cmmd.toUpperCase()}* 」`;
@@ -269,31 +104,24 @@ Description: ${i.desc}\`\`\``);
         });
         menu += `\n ╰─────────────┈⚆`;
       });
-menu += `\n\n𝗜𝗭𝗨𝗠𝗜-𝗫𝗗`;
+menu += config.BOT_INFO.split(";")[0];
       let penu = tiny(menu)
       let img = config.BOT_INFO.split(';')[2]
       return await message.sendFromUrl(img, {fileLength: "5555544444", gifPlayback: true, contextInfo: { externalAdReply: {
-title: "𝗜𝗭𝗨𝗠𝗜🧚‍♂️",
+title: config.BOT_INFO.split(";")[0],
 body: "",
 sourceUrl: "",
 mediaUrl: "",
 mediaType: 1,
 showAdAttribution: true,
 renderLargerThumbnail: false,
-thumbnailUrl: "https://i.imgur.com/Qh1AEV0.jpeg" }}, caption: (penu)}, {quoted: message })
+thumbnailUrl: config.BOT_INFO.split(";")[2] }}, caption: (penu)}, {quoted: message })
     }
 }catch(e){
 message.reply(e)
 }
   }
 );
-
-
-/* Copyright (C) 2024 Louis-X0.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-Louis-X0 - Zeta-X0
-*/
 
 command(
   {
@@ -325,17 +153,9 @@ command(
       if (desc) menu += `\n│  Use: \`\`\`${desc}\`\`\``;
       menu += `\n│\n`;
     });
-    menu += `╰───────┈┫「 𝐈𝐙𝐔𝐌𝐈 」┣┈────♡`;
+    menu += `╰───────┈┫「 ${config.BOT_INFO.split(";")[0]} 」┣┈────♡`;
     return await message.reply(message.jid, { text: (tiny(menu)) })
 })
-
-
-
-/* Copyright (C) 2022 X-Electra.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-X-Asena - X-Electra
-*/
 
 command(
   {
@@ -388,12 +208,6 @@ command(
   }
 );
 
-/* Copyright (C) 2022 X-Electra.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-X-Asena - X-Electra
-*/
-
 command(
   { 
       pattern: "allplug", 
@@ -419,12 +233,6 @@ command(
   }
 );
 
-/* Copyright (C) 2022 X-Electra.
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-X-Asena - X-Electra
-*/
-
 command(
   {
     pattern: "remove(?: |$)(.*)",
@@ -447,18 +255,4 @@ command(
     }
   }
 );
-
-
-command(
-    {
-	pattern: 'setbio(.*)',
-	fromMe: true,
-	desc: 'to change your profile status',
-	type: 'user'
-}, async (message, match) => {
-	match = match || message.reply_message.text
-	if (!match) return await message.reply('*_Need Text_!*\n *Example: setbio _Eypz-God_*.')
-	await message.client.updateProfileStatus(match)
-	await message.reply('*_Successfully bio updated_*')
-})
 
