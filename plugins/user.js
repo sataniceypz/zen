@@ -104,7 +104,6 @@ cmnd.sort();
         });
         menu += `\n ╰─────────────┈⚆`;
       });
-menu += config.BOT_INFO.split(";")[0];
       let penu = tiny(menu)
       let img = config.BOT_INFO.split(';')[2]
       return await message.sendFromUrl(img, {fileLength: "5555544444", gifPlayback: true, contextInfo: { externalAdReply: {
