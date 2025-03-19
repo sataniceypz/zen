@@ -64,7 +64,7 @@ async function zen() {
   conn.ev.on("connection.update", async (s) => {
     const { connection, lastDisconnect } = s;
     if (connection === "connecting") {
-      console.log("Izumi");
+      console.log("Zen");
       console.log("Reading session ID...");
     }
 
@@ -105,10 +105,10 @@ async function zen() {
         }
       });
 
-      console.log("Izumi connected successfully!");
+      console.log("Zen connected successfully!");
 
       let readMore = String.fromCharCode(8206).repeat(4001);
-      let str = `IZUMI-XD STARTED! ${readMore}\n\nVersion: *${require("./package.json").version}* \nPlugins: *${events.commands.length}* \nMode: *${config.WORK_TYPE}* \nPrefix: *${config.HANDLERS}*`;
+      let str = `ZEN STARTED! ${readMore}\n\nVersion: *${require("./package.json").version}* \nPlugins: *${events.commands.length}* \nMode: *${config.WORK_TYPE}* \nPrefix: *${config.HANDLERS}*`;
       conn.sendMessage(conn.user.id, { text: str });
 
       try {
