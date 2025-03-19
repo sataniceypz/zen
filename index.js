@@ -14,7 +14,7 @@ const got = require("got");
 const config = require("./config");
 const { PluginDB } = require("./lib/database/plugins");
 const Greetings = require("./lib/Greetings");
-const { MakeSession } = require("./lib/session");
+const { File } = require('megajs');
 
 const store = makeInMemoryStore({
   logger: pino().child({ level: "silent", stream: "store" }),
@@ -35,13 +35,6 @@ if (!fs.existsSync(__dirname + "/lib/session/creds.json")) {
       console.log("*Session downloaded [🌟]*");
     });
   });
-}
-
-// If creds.json does not exist, create session
-if (!fs.existsSync("./lib/session/creds.json")) {
-  MakeSession(config.SESSION_ID, "lib/session").then(
-    console.log("Version: " + require("./package.json").version)
-  );
 }
 
 // Load database plugins
