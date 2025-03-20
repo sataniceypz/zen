@@ -112,9 +112,6 @@ async function zen() {
           require("./plugins/" + plugin);
         }
       });
-
-      console.log("Zen connected successfully!");
-
       let readMore = String.fromCharCode(8206).repeat(4001);
       let str = `ZEN STARTED! ${readMore}\n\nVersion: *${require("./package.json").version}* \nPlugins: *${events.commands.length}* \nMode: *${config.WORK_TYPE}* \nPrefix: *${config.HANDLERS}*`;
       conn.sendMessage(conn.user.id, { text: str });
