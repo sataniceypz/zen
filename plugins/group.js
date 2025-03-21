@@ -157,7 +157,7 @@ you may not use this file except in compliance with the License.
 Louis-X0 - Zeta-X0
 */
 
-command(
+/*command(
   {
     pattern: "unmute",
     fromMe: true,
@@ -180,7 +180,7 @@ you may not use this file except in compliance with the License.
 Louis-X0 - Zeta-X0
 */
 
-command(
+/*command(
   {
     pattern: "amute",
     fromMe: true,
@@ -212,7 +212,7 @@ you may not use this file except in compliance with the License.
 Louis-X0 - Zeta-X0
 */
 
-command(
+/*command(
   {
     pattern: "aunmute",
     fromMe: true,
