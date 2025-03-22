@@ -428,7 +428,7 @@ Lynx-Xd - eypz-Xd
 
 command(
   {
-    pattern: "lock ?(.*)",
+    pattern: "lok ?(.*)",
     fromMe: true,
     desc: "only allow admins to modify the group's settings.",
     type: "group",
@@ -451,7 +451,7 @@ Lynx-Xd - eypz-Xd
 
 command(
   {
-    pattern: "unlock ?(.*)",
+    pattern: "lokunù ?(.*)",
     fromMe: true,
     desc: "allow everyone to modify the group's settings.",
     type: "group",
